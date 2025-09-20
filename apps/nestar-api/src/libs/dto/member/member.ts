@@ -55,6 +55,9 @@ export class Member {
 	memberLikes: number;
 
 	@Field(() => Int)
+	memberViews: number;
+
+	@Field(() => Int)
 	memberComments: number;
 
 	@Field(() => Int)
@@ -67,7 +70,7 @@ export class Member {
 	memberBlocks: number;
 
 	@Field(() => Date, { nullable: true })
-	deleteAt?: Date;
+	deletedAt?: Date;
 
 	@Field(() => Date)
 	createdAt: Date;
