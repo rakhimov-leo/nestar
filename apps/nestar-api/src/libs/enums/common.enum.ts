@@ -17,6 +17,7 @@ export enum Message {
 	NOT_AUTHENTICATED = 'Please login first!',
 	TOKEN_NOT_EXIST = 'token is not exist',
 	ONLY_SPECIFIC_ROLES_ALLOWED = 'Allowed only for members with specific roles',
+	PROVIDE_ALLOWED_FORMAT = 'masalan: "Allowed format is JPG, PNG, PDF" degan xatolik',
 }
 
 export enum Direction {
