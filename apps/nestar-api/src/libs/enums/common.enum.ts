@@ -9,15 +9,16 @@ export enum Message {
 
 	USED_MEMBER_NICK_OR_PHONE = 'Already used member nick or phone',
 	NO_MEMBER_NICK = 'No member with that member nick!',
-	TOKEN_CREATION_FAILED = 'Token creation error',
-	NO_NUMBER_NICK = 'you are inserting already used nick or phone!',
-	WRONG_PASSWORD = 'wrong password entered, please try again!',
 	BLOCKED_USER = 'User is blocked,  please contact Restaurant!',
-	USED_NICK_PHONE = 'Nick or phone is already used!',
+	WRONG_PASSWORD = 'wrong password entered, please try again!',
 	NOT_AUTHENTICATED = 'Please login first!',
 	TOKEN_NOT_EXIST = 'token is not exist',
 	ONLY_SPECIFIC_ROLES_ALLOWED = 'Allowed only for members with specific roles',
-	PROVIDE_ALLOWED_FORMAT = 'masalan: "Allowed format is JPG, PNG, PDF" degan xatolik',
+	NOT_ALLOWED_REQUEST = 'Not Allowed Request',
+	PROVIDE_ALLOWED_FORMAT = 'Please provide jpg, jpeg or png images!',
+	SELF_SUBSCRIPTION_DENIED = 'Self subscription is denied!',
+	TOKEN_CREATION_FAILED = 'Token creation error',
+	NO_NUMBER_NICK = 'you are inserting already used nick or phone!',
 }
 
 export enum Direction {
