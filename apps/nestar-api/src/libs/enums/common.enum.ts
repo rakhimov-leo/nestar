@@ -19,6 +19,7 @@ export enum Message {
 	SELF_SUBSCRIPTION_DENIED = 'Self subscription is denied!',
 	TOKEN_CREATION_FAILED = 'Token creation error',
 	NO_NUMBER_NICK = 'you are inserting already used nick or phone!',
+	REMOVE_FAILED = 'REMOVE_FAILED',
 }
 
 export enum Direction {
