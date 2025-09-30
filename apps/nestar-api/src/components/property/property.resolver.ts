@@ -1,15 +1,15 @@
-import { Query, Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { PropertyService } from './property.service';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { MemberType } from '../../libs/enums/member.enum';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/roles.guard';
+import { Property, Properties } from '../../libs/dto/property/property';
+import { PropertyInput, PropertiesInquiry } from '../../libs/dto/property/property.input';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { ObjectId } from 'mongoose';
-import { Property } from '../../libs/dto/property/property';
-import { PropertyInput } from '../../libs/dto/property/property.input';
-import { WithoutGuard } from '../auth/guards/without.guard';
 import { shapeIntoMongoObjectId } from '../../libs/config';
+import { WithoutGuard } from '../auth/guards/without.guard';
 import { PropertyUpdate } from '../../libs/dto/property/property.update';
 
 @Resolver()
@@ -27,7 +27,6 @@ export class PropertyResolver {
 		input.memberId = memberId;
 		return await this.propertyService.createProperty(input);
 	}
-
 	@UseGuards(WithoutGuard)
 	@Query((returns) => Property)
 	public async getProperty(
@@ -35,7 +34,9 @@ export class PropertyResolver {
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Property> {
 		console.log('Query: getProperty');
+
 		const propertyId = shapeIntoMongoObjectId(input);
+
 		return await this.propertyService.getProperty(memberId, propertyId);
 	}
 
@@ -53,5 +54,15 @@ export class PropertyResolver {
 		console.log(input._id);
 
 		return await this.propertyService.updateProperty(memberId, input);
+	}
+
+	@UseGuards(WithoutGuard)
+	@Query((returns) => Properties)
+	public async getProperties(
+		@Args('input') input: PropertiesInquiry,
+		@AuthMember('_id') memberId: ObjectId,
+	): Promise<Properties> {
+		console.log('Mutation: getProperties');
+		return await this.propertyService.getProperties(memberId, input);
 	}
 }
