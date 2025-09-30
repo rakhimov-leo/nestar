@@ -5,7 +5,12 @@ import { MemberType } from '../../libs/enums/member.enum';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Property, Properties } from '../../libs/dto/property/property';
-import { PropertyInput, PropertiesInquiry, AgentPropertiesInquiry } from '../../libs/dto/property/property.input';
+import {
+	PropertyInput,
+	PropertiesInquiry,
+	AgentPropertiesInquiry,
+	AllPropertiesInquiry,
+} from '../../libs/dto/property/property.input';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { ObjectId } from 'mongoose';
 import { shapeIntoMongoObjectId } from '../../libs/config';
@@ -75,5 +80,17 @@ export class PropertyResolver {
 	): Promise<Properties> {
 		console.log('Mutation: getAgentProperties');
 		return await this.propertyService.getAgentProperties(memberId, input);
+	}
+
+	/* Admin */
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Query((returns) => Properties)
+	public async getAllPropertiesByAdmin(
+		@Args('input') input: AllPropertiesInquiry,
+		@AuthMember('_id') memberId: ObjectId,
+	): Promise<Properties> {
+		console.log('Mutation: getAllPropertiesByAdmin');
+		return await this.propertyService.getAllPropertiesByAdmin(input);
 	}
 }
