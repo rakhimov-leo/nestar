@@ -6,7 +6,7 @@ import { MemberInput, LoginInput, AgentsInquiry, MembersInquiry } from '../../li
 import { Message, Direction } from '../../libs/enums/common.enum';
 import { MemberStatus, MemberType } from '../../libs/enums/member.enum';
 import { AuthService } from '../auth/auth.service';
-import { ObjectId } from 'bson';
+import { ObjectId } from 'mongoose';
 import { StatisticModifier, T } from '../../libs/types/common';
 import { ViewService } from '../view/view.service';
 import { MemberUpdate } from '../../libs/dto/member/member.update';
@@ -84,7 +84,7 @@ export class MemberService {
 			},
 		};
 
-		const targetMember = await this.memberModel.findOne(search).exec();
+		const targetMember = await this.memberModel.findOne(search).lean().exec();
 		if (!targetMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
 		if (memberId) {
@@ -163,7 +163,7 @@ export class MemberService {
 		return result;
 	}
 
-	public async memberStateEditor(input: StatisticModifier): Promise<Member> {
+	public async memberStatsEditor(input: StatisticModifier): Promise<Member> {
 		console.log('executed');
 
 		const { _id, targetKey, modifier } = input;
