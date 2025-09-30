@@ -5,7 +5,7 @@ import { MemberType } from '../../libs/enums/member.enum';
 import { UseGuards } from '@nestjs/common';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Property, Properties } from '../../libs/dto/property/property';
-import { PropertyInput, PropertiesInquiry } from '../../libs/dto/property/property.input';
+import { PropertyInput, PropertiesInquiry, AgentPropertiesInquiry } from '../../libs/dto/property/property.input';
 import { AuthMember } from '../auth/decorators/authMember.decorator';
 import { ObjectId } from 'mongoose';
 import { shapeIntoMongoObjectId } from '../../libs/config';
@@ -64,5 +64,16 @@ export class PropertyResolver {
 	): Promise<Properties> {
 		console.log('Mutation: getProperties');
 		return await this.propertyService.getProperties(memberId, input);
+	}
+
+	@Roles(MemberType.AGENT)
+	@UseGuards(RolesGuard)
+	@Query((returns) => Properties)
+	public async getAgentProperties(
+		@Args('input') input: AgentPropertiesInquiry,
+		@AuthMember('_id') memberId: ObjectId,
+	): Promise<Properties> {
+		console.log('Mutation: getAgentProperties');
+		return await this.propertyService.getAgentProperties(memberId, input);
 	}
 }
