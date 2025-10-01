@@ -39,9 +39,8 @@ export class PropertyResolver {
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Property> {
 		console.log('Query: getProperty');
-
 		const propertyId = shapeIntoMongoObjectId(input);
-
+		console.log('propertyId:', propertyId);
 		return await this.propertyService.getProperty(memberId, propertyId);
 	}
 

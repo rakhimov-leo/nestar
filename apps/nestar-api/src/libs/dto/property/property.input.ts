@@ -1,8 +1,8 @@
-import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, Length, IsIn, Min } from 'class-validator';
-import { PropertyType, PropertyLocation, PropertyStatus } from '../../enums/property.enum';
+import { Field, InputType, Int } from '@nestjs/graphql';
+import { IsIn, IsInt, IsNotEmpty, IsOptional, IsPort, length, Length, Min, MIN } from 'class-validator';
+import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import { ObjectId } from 'mongoose';
-import { availablePropertySorts, availableOptions } from '../../config';
+import { availableOptions, availablePropertySorts } from '../../config';
 import { Direction } from '../../enums/common.enum';
 
 @InputType()
@@ -34,11 +34,13 @@ export class PropertyInput {
 	propertySquare: number;
 
 	@IsNotEmpty()
+	@IsInt()
 	@Min(1)
 	@Field(() => Int)
 	propertyBeds: number;
 
 	@IsNotEmpty()
+	@IsInt()
 	@Min(1)
 	@Field(() => Int)
 	propertyRooms: number;
@@ -95,7 +97,7 @@ export class PeriodsRange {
 }
 
 @InputType()
-export class PISearch {
+class PISearch {
 	@IsOptional()
 	@Field(() => String, { nullable: true })
 	memberId?: ObjectId;
@@ -114,7 +116,7 @@ export class PISearch {
 
 	@IsOptional()
 	@Field(() => [Int], { nullable: true })
-	bedsList?: Number[];
+	bedsList: Number[];
 
 	@IsOptional()
 	@IsIn(availableOptions, { each: true })
@@ -163,6 +165,7 @@ export class PropertiesInquiry {
 	@Field(() => PISearch)
 	search: PISearch;
 }
+
 @InputType()
 class APISearch {
 	@IsOptional()
@@ -190,10 +193,10 @@ export class AgentPropertiesInquiry {
 	@IsOptional()
 	@Field(() => Direction, { nullable: true })
 	direction?: Direction;
-
 	@IsNotEmpty()
 	@Field(() => APISearch)
 	search: APISearch;
+	l;
 }
 
 @InputType()
